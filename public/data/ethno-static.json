@@ -1,0 +1,49 @@
+{
+ "name": "ethno-computer",
+ "children": [
+  {
+   "name": "Greater European",
+   "homo":19.7,
+   "hetero":80.3,
+  },
+  {
+   "name": "Greater African",
+   "homo":7.2,
+   "hetero":92.8,
+   "children": [
+    { "name": "Africans", 
+      "homo": 10, "hetero": 90
+    },
+    { "name": "Muslim", 
+      "homo": 7, 
+      "hetero": 93 
+    }
+   ]
+  },
+  {
+   "name": "Asian",
+   "homo":56,
+   "hetero":44,
+   "children": [
+    {
+     "name": "Indian Sub Continent", 
+     "homo": 32.4, 
+     "hetero": 67.6
+    },
+    {
+     "name": "Greater East Asian",
+     "homo":63.38,
+     "hetero":36.62,
+     "children": [
+      {
+       "name": "East Asian", "homo": 64.8, "hetero": 35.2 
+      },
+      {
+       "name": "Japanese", "homo": 13, "hetero": 87
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

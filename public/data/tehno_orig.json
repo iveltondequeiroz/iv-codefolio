@@ -1,0 +1,49 @@
+{
+ "name": "ethno",
+ "children": [
+  {
+   "name": "Greater European",
+   "children": [
+    {"name": "British", "size": 28},
+    {"name": "East European", "size": 6},
+    {"name": "Jewish", "size": 9},
+    {
+     "name": "West European",
+     "children": [
+      {"name": "French", "size": 18},
+      {"name": "Germanic", "size": 10},
+      {"name": "Hispanic", "size": 12},
+      {"name": "Italian", "size": 7},
+      {"name": "Nordic", "size": 1}
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Greater African",
+   "children": [
+    {"name": "Africans", "size": 10},
+    {"name": "Muslim", "size": 6}
+   ]
+  },
+  {
+   "name": "Asian",
+   "children": [
+    {
+     "name": "Indian Sub Continent", "size": 32
+    },
+    {
+     "name": "Greater East Asian",
+     "children": [
+      {
+       "name": "East Asian", "size": 64 
+      },
+      {
+       "name": "Japanese", "size": 13
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

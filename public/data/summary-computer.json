@@ -1,0 +1,71 @@
+{
+ "name": "ethno-computer",
+ "children": [
+  {
+   "name": "Asian,GreaterEastAsian,EastAsian", 
+   "homo": 65, 
+   "hetero": 35
+  },
+  {
+    "name": "Asian,IndianSubContinent", 
+    "homo": 32, 
+    "hetero": 68
+  },
+  {
+    "name": "GreaterAfrican,Africans", 
+    "homo": 10, 
+    "hetero": 90
+  },
+  {
+    "name": "GreaterEuropean,British", 
+    "homo": 29, 
+    "hetero": 71
+  },
+  {
+    "name": "GreaterEuropean,WestEuropean,French", 
+    "homo": 18, 
+    "hetero": 82
+  },
+  { 
+    "name": "Asian,GreaterEastAsian,Japanese", 
+    "homo": 13, 
+    "hetero": 87
+  },
+  { 
+    "name": "GreaterEuropean,WestEuropean,Hispanic", 
+    "homo": 12.5, 
+    "hetero": 87.5
+  },
+  { 
+    "name": "GreaterEuropean,WestEuropean,Germanic", 
+    "homo": 10, 
+    "hetero": 90
+  },
+  { 
+    "name": "GreaterEuropean,Jewish", 
+    "homo": 9.5, 
+    "hetero": 90.5
+  },
+  { 
+    "name": "GreaterEuropean,WestEuropean,Italian", 
+    "homo": 8, 
+    "hetero": 92
+  },
+  { 
+    "name": "GreaterEuropean,WestEuropean,Nordic", 
+    "homo": 0, 
+    "hetero": 100
+  },
+  { 
+    "name": "GreaterEuropean,EastEuropean", 
+    "homo": 7, 
+    "hetero": 93
+  },
+  { 
+    "name": "GreaterAfrican,Muslim", 
+    "homo": 6, 
+    "hetero": 94
+  }
+
+ ]
+}

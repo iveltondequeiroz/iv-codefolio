@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang=''>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"src="bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+
+    <title>Skillscape</title>
+    <style>
+    body {
+        font-family: 'Raleway', sans-serif;
+        font-size: 40px;
+    }
+
+    .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
+
+    .link {
+        fill: none;
+        stroke: #bbb;
+    }
+
+    div.tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 2px;
+        font: 12px sans-serif;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+    }
+
+    .tooltip2 {
+        position: absolute;
+        z-index: 10;
+        background-color: rgba(255, 255, 255, 0.95);
+        border: 2px #B1B5B4 solid;
+        border-radius: 10px;
+        color: #52524E;
+        margin: 5px;
+        padding: 5px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 13px;
+    }
+
+    .button {
+        background-color: #888888;
+        border: none;
+        color: white;
+        padding: 10px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .graph1 {
+        opacity: 1;
+    }
+
+    .vertical-center {
+        min-height: 80%;  /* Fallback for browsers do NOT support vh unit */
+        min-height: 80vh; /* These two lines are counted as one :-)       */
+
+        display: flex;
+        align-items: center;
+    }
+
+    #overlay {
+    padding: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    filter:alpha(opacity=100);
+    -moz-opacity:1.0;
+    -khtml-opacity: 1.0;
+    opacity: 1.0;
+    z-index: 10000;
+	}
+
+    body {
+        overflow:hidden;
+    }
+    </style>
+    <script type="text/javascript" src="json_files/job_categories.js"></script>
+
+</head>
+
+<body>
+<script>
+var overlay;
+if(sessionStorage.authorized) {
+} else {
+	var checkPassword = function() {
+		if(document.getElementById("xpwd").value != "ivelton") {
+			overlay.remove();
+			overlay = jQuery('<div id="overlay">Incorrect password. <input type="button" id="xtry" onClick="javascript:window.location.reload();" value="Try again?"/></div>');
+			overlay.appendTo(document.body);
+			document.getElementById("xtry").focus();
+		} else {
+			overlay.remove();
+			sessionStorage.authorized = true;
+		}
+	}
+	overlay = jQuery('<div id="overlay"><form onSubmit="javascript:checkPassword();return false;">Please enter password: <input id="xpwd" type="password"/><input type="submit" value="Submit"></form></div>');
+	overlay.appendTo(document.body);
+	document.getElementById("xpwd").focus();
+}
+</script>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="hidden-xs">
+                <img src="imgs/symbol_color.png" id='websiteTitleIMG' style="position:relative; float:left;"><span style='float:left'>&nbsp; Skillscape</span>
+
+                <span style="padding-left:10px"><b><i style="font-size:14px;" >Unpacking skills inside jobs and cities</i></b></span>
+                </div>
+                <div class="hidden-sm hidden-md hidden-lg">
+                <img src="imgs/symbol_color.png" id='websiteTitleIMG' style="position:relative; float:left;"><span style='float:left;font-size:18px;padding-left:10px;'><b>Skillscape</b><br>
+                <i style="font-size:11px;padding-left:2px;" >Unpacking skills inside jobs and cities</i>
+                </span>
+                </div>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cssmenu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="cssmenu">
+                <ul class="nav navbar-nav">
+                <li class='active'><a href='/skillscape'>Home</a></li>
+                <!--<li><a href='jobs_explore.html'>Explore Jobs</a></li> -->
+                <li><a href='/jobs_compare'>Compare Jobs</a></li>
+                <!--- <li><a href='city_explore.html'>Explore Cities</a></li> -->
+                <li><a href='/city_compare'>Compare Cities</a></li>
+                <li><a href='/about'>About</a></li>
+                <li><a href='/methods'>Methods</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+        <div class="vertical-center">
+            <img src="imgs/skillscape.png" class="img-responsive center-block">
+        </div>
+</body>
+</HTML>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ethno-Science</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="/stylesheets/d3style.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"src="bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.0/d3.min.js"></script>
+    <script src="js/saveSvgAsPng.js"></script>
+  </head>
+ <style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.subtitle {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.bar {
+  fill: #EF5350;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area {
+    stroke: black;
+    stroke-width: 1.5px;
+    fill: #B71C1C;
+    opacity: 0.6;
+}
+
+.area2 {
+    stroke: blue;
+    stroke-width: 1.5px;
+    fill: #B3E5FC;
+    opacity: 0.6;
+}
+/*.y.axis path {
+  display: none;
+}
+*/
+
+
+</style>
+  <body>
+
+    <div class="container">
+      <div class="cols-xs-6">
+          <img src="imgs/title.png" class="img-responsive">
+          <h4 style="padding-left: 10px">
+          </h4>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+          <div class="chart-container">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span style="font-size: 12px; font-weight: bold;">How Many </span>
+                  <select id="fieldsselect" onchange="fieldSelected();" style="font-size: 12px;font-weight: bold; margin-top: 5px;">
+                    <option value="0">Similar keywords</option>
+                    <option value="1">Similar fields</option>
+                    <option value="2">Papers co-authored</option>
+                    <option value="3">Co-references</option>
+                    <option value="4">Co-citations</option>
+                    <option value="5">Shared Affiliations</option>
+                    <option value="6">Shared Conferences</option>
+                  </select>
+                  <span style="font-size: 12px; font-weight: bold;">do Homogeneous & Heterogeneous authors in</span>
+                  <select id="fieldsselect" onchange="fieldSelected();" style="font-size: 12px;font-weight: bold; margin-top: 5px;">
+                    <option value="-1">Different fields of science</option>
+                    <option value="0">Computer Science</option>
+                    <option value="1">Sustainable Energy</option>
+                    <option value="2">Mechanical Engineering</option>
+                    <option value="3">Cardiology</option>
+                  </select>
+                <span style="font-size: 12px;font-weight: bold;"> Share ?
+                </span>
+                <div align="center">
+                  <input id="toggle-event'" type="checkbox" checked data-toggle="toggle" data-size="small" data-on="Histogram" data-off="Network" data-onstyle="primary" data-offstyle="info" onChange="optionChanged(this.checked);">
+                </div>
+              </div>
+              <div class="panel-body">
+                <div>
+                  <div class="svg-container" id="chart0"></div>
+                  <div align="right">
+                    <button type="button" id="save0" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg0'), 'histo-computerscience.png', { backgroundColor:'white' } )";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <div class="svg-container" id="chart1"></div>
+                  <div align="right">
+                    <button type="button" id="save1" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg1'), 'histo-sustainableenergy.png', { backgroundColor:'white' } )";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <div class="svg-container" id="chart2"></div>
+                  <div align="right">
+                    <button type="button" id="save2" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg2'), 'histo-mechaengineering.png', { backgroundColor:'white' } )";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <div class="svg-container" id="chart3"></div>
+                  <div align="right">
+                    <button type="button" id="save3" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg3'), 'histo-cardiology.png', { backgroundColor:'white' } )";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 hidden-xs hidden-sm hidden-md">
+          <div class="panel panel-default">
+            <div class="panel-body tile" align="center">
+              <strong><a href="/ethno-science">What are the most Homogeneous / Heterogeneous Ethnicities?</a></strong>
+              <br><br><img src="imgs/chart.png" class="img-responsive">
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-body tile" align="center">
+              <strong><a href="/histo">Who gets cited more, Homogeneous or Heterogeneous Authors?</a></strong>
+              <br><br><img src="imgs/chart.png" class="img-responsive">
+            </div>
+          </div>
+        </div>
+      </div>
+<script>
+  var homo_color = "#EF5350";
+  var hetero_color = "#039BE5";
+  var fields= [
+    {"field": "Computer Science", "file":"histo-computer.csv"},
+    {"field": "Sustainable Energy", "file":"histo-energy.csv" },
+    {"field": "Mechanical Engineering", "file":"histo-mecha.csv" },
+    {"field": "Cardiology", "file":"histo-cardio.csv" }
+  ];
+
+
+
+function drawChart(field, index) {
+  var field = fields[index];
+
+  var csv_file="data/"+field.file;
+
+  d3.csv(csv_file, function(error, kdd) {
+    if (error) throw error;
+
+    var chartDiv = document.getElementById("chart"+index);
+    // Extract the width and height that was computed by CSS.
+    var cwidth = chartDiv.clientWidth-60;
+    var margin = {top: 35, right: 30, bottom: 50, left: 40},
+      width = 860 - margin.left - margin.right,
+      height = 360 - margin.top - margin.bottom;
+
+    var MAX_RANGE = 200;
+    //&& typeof parseInt(i.homo) != 'undefined'
+    var maphomo = kdd.map(function(i) { if(parseInt(i.homo)<=MAX_RANGE && typeof i.homo!=='undefined') return parseInt(i.homo); });
+    var maphetero = kdd.map(function(i) { if(parseInt(i.hetero)<=MAX_RANGE && typeof i.hetero!=='undefined') return parseInt(i.hetero); });
+
+
+    var maxhomo = d3.max(kdd, function(d) { if(parseInt(d.homo)<=MAX_RANGE) return +d.homo;} );
+    var maxhetero = d3.max(kdd, function(d) { if(parseInt(d.hetero)<=MAX_RANGE) return +d.hetero;} );
+    var max = Math.max(maxhomo, maxhetero);
+
+    var x = d3.scale.linear()
+      .domain([0, 200])
+      .range([0, cwidth]);
+
+    var y = d3.scale.linear()
+      .domain([0, 200])
+      .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .ticks(20)
+      .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .ticks(10)
+      .orient("left")
+
+   // Define the div for the tooltip
+    var div = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+
+    // Area is used to draw the shaded density plots
+    var area = d3.svg.area()
+        .x(function(d) { return x(d[0]); })
+        .y0(y(0))               // Bottom of area corresponds to 0 on the y axis
+        .y1(function(d) { return y(d[1]); });
+
+    var histogram = d3.layout.histogram()
+      .frequency(true)
+      .bins(x.ticks(20));
+
+    var data = histogram(maphomo);
+
+    var kde = kernelDensityEstimator(epanechnikovKernel(3), x.ticks(200));
+
+    var data2 = histogram(maphetero);
+
+    var svg = d3.select("#chart"+index).append("svg")
+      .attr("width", cwidth + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom -8)
+      //.attr("height", height + margin.top + margin.bottom)
+      .attr("id","svg"+index)
+      .append("g")
+        .attr("transform", "translate(40 ,"  + margin.top + ")");
+
+    svg.selectAll(".bar")
+      .data(data)
+      .enter().insert("rect", ".axis")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.x); })
+        .attr("y", function(d) { return y(d.y); })
+        .attr("width", x((data[0].dx + data[0].x) - x(data[0].x))/2-1)
+        .attr("height", function(d) { return height - y(d.y); });
+
+    svg.append('defs')
+      .append('pattern')
+        .attr('id', 'diagonalHatch')
+        .attr('patternUnits', 'userSpaceOnUse')
+        .attr('width', 4)
+        .attr('height', 4)
+      .append('path')
+        .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+        .attr('stroke', '#000000')
+        .attr('stroke-width', 1);
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .style("font-size","12px")
+      .call(xAxis)
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .style("font-size","12px")
+      .call(yAxis);
+
+
+    svg.selectAll(".bar2bg")
+      .data(data2)
+      .enter().insert("rect", ".axis")
+        .attr("fill", hetero_color)
+        .attr("x", function(d) { return x(d.x) + 18; })
+        .attr("y", function(d) { return y(d.y); })
+        .attr("width", x((data[0].dx + data[0].x) - x(data[0].x))/2-1)
+        .attr("height", function(d) { return height - y(d.y); });
+
+    svg.selectAll(".bar2")
+      .data(data2)
+      .enter().insert("rect", ".axis")
+        .attr("fill", "url(#diagonalHatch)")
+        .attr("x", function(d) { return x(d.x) + 18; })
+        .attr("y", function(d) { return y(d.y); })
+        .attr("width", x((data[0].dx + data[0].x) - x(data[0].x))/2-1)
+        .attr("height", function(d) { return height - y(d.y); });
+
+
+     svg.append("g")
+        .attr("class", "legend")
+      .append("text")
+        .text(field.field)
+        .attr("font-weight","bold")
+        .attr("x", -10)
+        .attr("y", -20);
+
+     svg.append("g")
+        .attr("class", "legend")
+      .append("text")
+        .attr("font-size",14)
+        .text("number of citations")
+        .attr("x", cwidth/2-20)
+        .attr("y", 310);
+
+    //if(index==0) {
+      svg.append("g")
+      .attr("class", "homotxtlegend")
+      .append("text")
+        .attr("x", cwidth-90)
+        .attr("y", 11)
+        .attr("font-size",14)
+        .text("homogeneous");
+    svg.append("g")
+      .attr("class", "homolegend")
+      .append("rect")
+        .attr("fill",homo_color)
+        .attr("width",10)
+        .attr("height",10)
+        .attr("font-size",14)
+        .attr("x", cwidth-110)
+        .attr("y", 2);
+    svg.append("g")
+      .attr("class", "muhomo")
+      .append("text")
+        .attr("x", cwidth-90)
+        .attr("y", 26)
+        .attr("font-size",14)
+        .text("\u03bc = "+mean(maphomo).toString().substring(0, mean(maphomo)<10?4:5));
+    svg.append("g")
+      .attr("class", "sigmahomo")
+      .append("text")
+        .attr("x", cwidth-90)
+        .attr("y", 40)
+        .attr("font-size",14)
+        .text("\u03c3 = "+standardDeviation(maphomo).toString().substring(0, standardDeviation(maphomo)<10?4:5));
+
+
+    svg.append("g")
+      .attr("class", "heterotxtlegend")
+      .append("text")
+        .attr("x", cwidth-90)
+        .attr("y", 69)
+        .attr("font-size",14)
+        .text("heterogeneous");
+    svg.append("g")
+      .attr("class", "heterolegendbg")
+      .append("rect")
+        .attr("fill",hetero_color)
+        .attr("width",10)
+        .attr("height",10)
+        .attr("x", cwidth-110)
+        .attr("y", 60);
+    svg.append("g")
+      .attr("class", "heterolegendbg")
+      .append("rect")
+        .attr("fill", "url(#diagonalHatch)")
+        .attr("width",10)
+        .attr("height",10)
+        .attr("x", cwidth-110)
+        .attr("y", 60);
+    svg.append("g")
+      .attr("class", "muhetero")
+      .append("text")
+        .attr("x", cwidth-90)
+        .attr("y", 85)
+        .attr("font-size",14)
+        .text("\u03bc = "+mean(maphetero).toString().substring(0, mean(maphetero)<10?4:5));
+    svg.append("g")
+      .attr("class", "sigmahetero")
+      .append("text")
+        .attr("x", cwidth-90)
+        .attr("y", 99)
+        .attr("font-size",14)
+        .text("\u03c3 = "+standardDeviation(maphetero).toString().substring(0, standardDeviation(maphetero)<10?4:5));
+
+
+    svg.append("path")
+      .datum(kde(maphomo))
+      .attr("class", "area")
+      .attr("d", area);
+
+    svg.append("g")
+      .append("path")
+      .datum(kde(maphetero))
+      .attr("class", "area2")
+      .attr("d", area);
+
+  });
+}
+
+
+  // draw all charts
+  drawAllFields();
+
+  d3.select(window).on('resize', resize);
+  function resize() {
+    fieldSelected();
+  };
+
+  function kernelDensityEstimator(kernel, x) {
+    return function(sample) {
+      return x.map(function(x) {
+        return [x, d3.mean(sample, function(v) { return kernel(x - v); })];
+      });
+    };
+  }
+
+  function epanechnikovKernel(scale) {
+    return function(u) {
+      return (Math.abs(u /= scale) <= 1 ? .75 * (1 - u * u) / scale : 0)*1000;
+    };
+  }
+
+  function fieldSelected() {
+    var fieldssel = document.getElementById("fieldsselect");
+    index = parseInt(fieldssel.options[fieldssel.selectedIndex].value);
+    if(index==-1)  { // all fields
+      drawAllFields();
+    } else {
+      drawField(index);
+    }
+  }
+
+  function drawAllFields(){
+    cleanCanvas();
+    for(c=0;c<fields.length;c++) {
+      obj = fields[c];
+      field = obj.field;
+      drawChart(field,c);
+      show('save'+c);
+    }
+  }
+
+  function drawField(index){
+    cleanCanvas();
+    obj = fields[index];
+    field = obj.field;
+    drawChart(field,index);
+
+    for(c=0;c<fields.length;c++) {
+      hide('save'+c);
+    }
+    show('save'+index);
+  }
+
+
+  function cleanCanvas() {
+    for(c=0;c<fields.length;c++) {
+      var chartDiv1 = document.getElementById("chart"+c);
+      while (chartDiv1.firstChild) {
+        chartDiv1.removeChild(chartDiv1.firstChild);
+      }
+    }
+  }
+
+ function show(id) {
+    var e = document.getElementById(id);
+    e.style.display = 'block';
+ }
+
+ function hide(id) {
+    var e = document.getElementById(id);
+    e.style.display = 'none';
+ }
+
+
+  //Check whether is a number or not
+  function isNum(args) {
+    args = args.toString();
+    if (args.length == 0) return false;
+    for (var i = 0; i<args.length; i++) {
+      if ((args.substring(i,i+1) < "0" || args.substring(i, i+1) > "9") && args.substring(i, i+1) != "."&& args.substring(i, i+1) != "-")
+      {
+      return false;
+      }
+    }
+    return true;
+  }
+
+  //calculate the mean of a number array
+  function mean(arr) {
+    var len = 0;
+    var sum = 0;
+    for(var i=0;i<arr.length;i++) {
+      if (arr[i] == "" || typeof arr[i]=="undefined"){} // || typeof arr[i]==='undefined')
+      else if (!isNum(arr[i]))
+      {
+      alert(arr[i] + " is not number!");
+      return;
+      }
+      else
+      {
+      len = len + 1;
+      sum = sum + parseFloat(arr[i]);
+      }
+    }
+    return sum / len;
+  }
+
+  function variance(arr) {
+    var len = 0;
+    var sum=0;
+    for(var i=0;i<arr.length;i++) {
+      if (arr[i] == "" || typeof arr[i]=="undefined"){}
+      else if (!isNum(arr[i]))
+      {
+      alert(arr[i] + " is not number, Variance Calculation failed!");
+      return 0;
+      }
+      else
+      {
+      len = len + 1;
+      sum = sum + parseFloat(arr[i]);
+      }
+    }
+    var v = 0;
+    if (len > 1)
+    {
+    var mean = sum / len;
+    for(var i=0;i<arr.length;i++)
+    {
+      if (arr[i] == "" || typeof arr[i]=="undefined"){}
+      else
+      {
+      v = v + (arr[i] - mean) * (arr[i] - mean);
+      }
+    }
+    return v / len;
+    }
+    else
+    {
+    return 0;
+    }
+  }
+
+  //Standard deviation
+  function standardDeviation(arr){
+    return Math.sqrt(variance(arr));
+  }
+
+  </script>
+
+  </body>
+</html>

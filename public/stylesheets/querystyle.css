@@ -1,0 +1,58 @@
+#elements{
+	width:80px;
+	height:420px;
+	float:left;
+	margin-top:15px;
+	margin-right:70px;
+}
+
+#querybuilder{
+	width:450px;
+	height:500px;
+	float:left;
+	margin:15px;
+	background-color:#f8f8f8;
+}
+
+#jsonbox{
+	width:200px;
+	height:500px;
+	float:left;
+	margin:15px;
+}
+
+#jsonquery{
+	resize:none;
+	width:280px;
+	height:300px;
+	margin:10px;	
+}
+
+.row-item2 { 
+	float: left; 
+}
+
+.ul-query { 
+	list-style-type: none; 
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+.li-query { 
+	margin: 5px; 
+	padding: 5px; 
+	width: 130px;
+	height: 30px; 
+	color: #ffffff;
+	background-color: #029b17;
+	border-radius: 5px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 120px 180px 40px 40px;
+  grid-gap: 10px;
+  margin:5px;
+}
+

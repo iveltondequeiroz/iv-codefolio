@@ -1,0 +1,60 @@
+{
+ "name": "ethno",
+ "children": [
+  {
+   "name": "Greater European",
+   "color":"#3F51B5",
+   "homo":19,
+   "hetero":80,
+   "children": [
+    {"name": "British", "homo": 28, "hetero": 71, "color":"#3F51B5"},
+    {"name": "East European", "homo": 6, "hetero": 93,"color":"#3F51B5"},
+    {"name": "Jewish", "homo": 9, "hetero": 90,"color":"#3F51B5"},
+    {
+     "name": "West European",
+     "color":"#3F51B5",
+     "children": [
+      {"name": "French", "homo": 18, "hetero": 81,"color":"#3F51B5"},
+      {"name": "Germanic", "homo": 10, "hetero": 90,"color":"#3F51B5"},
+      {"name": "Hispanic", "homo": 12, "hetero": 87,"color":"#3F51B5"},
+      {"name": "Italian", "homo": 7, "hetero": 92,"color":"#3F51B5"},
+      {"name": "Nordic", "homo": 0, "hetero": 100,"color":"#3F51B5"}
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Greater African",
+   "color": "black",
+   "homo":7,
+   "hetero":92,
+   "children": [
+    {"name": "Africans", "homo": 10, "hetero": 90,"color":"black"},
+    {"name": "Muslim", "homo": 6, "hetero": 93,"color":"black"}
+   ]
+  },
+  {
+   "name": "Asian",
+   "color": "#FFC107",
+   "homo":56,
+   "hetero":43,
+   "children": [
+    {
+     "name": "Indian Sub Continent", "homo": 32, "hetero": 67,"color": "#FFC107"
+    },
+    {
+     "name": "Greater East Asian",
+     "color": "#FFC107",
+     "children": [
+      {
+       "name": "East Asian", "homo": 64, "hetero": 35,"color": "#FFC107" 
+      },
+      {
+       "name": "Japanese", "homo": 13, "hetero": 86,"color": "#FFC107"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

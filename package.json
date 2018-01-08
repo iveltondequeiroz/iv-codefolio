@@ -1,0 +1,25 @@
+{
+  "name": "iv-codes",
+  "version": "1.0.0",
+  "description": "ivelton queiroz codefolio",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express",
+    "ivelton"
+  ],
+  "author": "ivelton queiroz",
+  "license": "MIT",
+  "engines": {
+    "node": "9.3.0"
+  },
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}

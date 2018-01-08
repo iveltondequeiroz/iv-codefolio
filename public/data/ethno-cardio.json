@@ -1,0 +1,103 @@
+{
+ "name": "ethno-cardio",
+ "children": [
+  {
+   "name": "Greater European",
+   "homo":51.74,
+   "hetero":48.26,
+   "children": [
+    {
+      "name": "British", 
+      "homo": 67.32, 
+      "hetero": 32.68
+    },
+    { 
+      "name": "East European", 
+      "homo": 0, 
+      "hetero": 100
+    },
+    {
+      "name": "Jewish", 
+      "homo": 20.17, 
+      "hetero": 79.83
+    },
+    {
+      "name": "West European",
+      "homo": 13.22, 
+      "hetero": 86.78,
+      "children": [
+        {
+          "name": "French", 
+          "homo": 20.86, 
+          "hetero": 79.14
+        },
+        {
+          "name": "Germanic", 
+          "homo": 4, 
+          "hetero": 96
+        },
+        {
+          "name": "Hispanic", 
+          "homo": 6.25, 
+          "hetero": 93.75
+        },
+        { 
+          "name": "Italian", 
+          "homo": 16.67, 
+          "hetero": 83.33
+        },
+        { 
+          "name": "Nordic", 
+          "homo": 0, 
+          "hetero": 100
+        }
+      ]
+    }
+   ]
+  },
+  {
+   "name": "Greater African",
+   "homo": 12.61,
+   "hetero":87.39,
+   "children": [
+    { "name": "Africans", 
+      "homo": 11.43, 
+      "hetero": 88.57
+    },
+    { "name": "Muslim", 
+      "homo": 13.16, 
+      "hetero": 86.84 
+    }
+   ]
+  },
+  {
+   "name": "Asian",
+   "homo": 32.86,
+   "hetero": 67.14,
+   "children": [
+    {
+     "name": "Indian Sub Continent", 
+     "homo": 31.21, 
+     "hetero": 68.79
+    },
+    {
+     "name": "Greater East Asian",
+     "homo": 34.44,
+     "hetero": 65.56,
+     "children": [
+      {
+       "name": "East Asian", 
+       "homo": 40, 
+       "hetero": 60 
+      },
+      {
+       "name": "Japanese", 
+       "homo": 17.78, 
+       "hetero": 82.22
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

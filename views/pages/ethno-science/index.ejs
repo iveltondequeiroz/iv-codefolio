@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ethno-Science</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"src="bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.0.0/d3.min.js"></script>
+    <link href="/stylesheets/d3style.css" rel="stylesheet">
+    <script src="js/saveSvgAsPng.js"></script>
+
+  </head>
+  <style>
+    .axis text { display: none; }
+    .tick line{  visibility:hidden;}
+  </style>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <img src="imgs/title.png" class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-9">
+          <div class="chart-container">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4>What are the most Homogeneous / Heterogeneous Ethnicities in the Different Fields of Science?</h4>
+                <div align="center">
+                  <input id="toggle-event'" type="checkbox" checked data-toggle="toggle" data-size="small" data-on="Hierachy" data-off="Overall" data-onstyle="primary" data-offstyle="info" onChange="optionChanged(this.checked);">
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div>
+                  <div class-"svg-container" id="chart0"></div>
+                  <div align="right">
+                  <button type="button" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg0'), 'computerscience.png')";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <div class-"svg-container" id="chart1"></div>
+                  <div align="right">
+                  <button type="button" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg1'), 'sustainableenergy.png')";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <div class-"svg-container" id="chart2"></div>
+                  <div align="right">
+                  <button type="button" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg2'), 'mechaengineering.png')";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+                <div>
+                  <div class-"svg-container" id="chart3"></div>
+                  <div align="right">
+                  <button type="button" class="btn btn-default btn-mini" onclick="saveSvgAsPng(document.getElementById('svg3'), 'cardiology.png')";><i class="icon-save"></i></button>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 hidden-xs hidden-sm hidden-md">
+          <div class="panel panel-default">
+            <div class="panel-body tile" align="center">
+              <strong><a href="/histo">Who gets cited more, Homogeneous or Heterogeneous Authors?</a></strong>
+              <br><br><img src="imgs/chart.png" class="img-responsive">
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-body tile" align="center">
+              <strong><a href="/histo2">How many in similarity Homogeneous or Heterogeneous Authors share? </a></strong>
+              <br><br><img src="imgs/chart2.png" class="img-responsive">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 hidden-md hidden-lg">
+          <div class="panel panel-default">
+            <div class="panel-body tile" align="center">
+              <strong><a href="/histo">Who gets cited more, Homogeneous or Heterogeneous Authors?</a></strong>
+              <br><br><img src="imgs/chart.png" class="img-responsive">
+            </div>
+          </div>
+        </div>
+      </div>
+
+<script>
+  var chart_height = 200;
+  var homo_color = "#EF5350";
+  var hetero_color = "#4FC3F7";
+
+  var title0_offset = -150;
+  var title1_offset = -130;
+  var title2_offset = -162;
+  var title3_offset = -110;
+  var y_offset = -145;
+  var legend_offset = 140;
+  var chart_option = true;
+
+  var fields= [
+        {"field": "Computer Science", "file":"ethno-computer.json"},
+        {"field": "Sustainable Energy", "file":"ethno-energy.json" },
+        {"field": "Mechanical Engineering", "file":"ethno-mecha.json" },
+        {"field": "Cardiology", "file":"ethno-cardio.json" }
+      ];
+
+  function optionChanged(option){
+    chart_option=option;
+    if(option==true) {
+      fields= [
+        {"field": "Computer Science", "file":"ethno-computer.json"},
+        {"field": "Sustainable Energy", "file":"ethno-energy.json" },
+        {"field": "Mechanical Engineering", "file":"ethno-mecha.json" },
+        {"field": "Cardiology", "file":"ethno-cardio.json" }
+      ];
+    } else {
+      fields= [
+          {"field": "Computer Science", "file":"summary-computer.json"},
+          {"field": "Sustainable Energy", "file":"summary-energy.json" },
+          {"field": "Mechanical Engineering", "file":"summary-mecha.json" },
+          {"field": "Cardiology", "file":"summary-cardio.json" }
+      ];
+    }
+
+    // draw charts
+      for(c=0;c<fields.length;c++) {
+        var chartDiv1 = document.getElementById("chart"+c);
+        while (chartDiv1.firstChild) {
+          chartDiv1.removeChild(chartDiv1.firstChild);
+        }
+        obj = fields[c];
+        field = obj.field;
+        drawChart(field,c,option);
+    }
+  }
+
+  function drawChart(field, index, hierarchy) {
+    var chartDiv = document.getElementById("chart"+index);
+    // Extract the width and height that was computed by CSS.
+    var cwidth, cheight, margin;
+    if(hierarchy) {
+      cwidth = chartDiv.clientWidth-30;
+      cheight = chartDiv.clientHeight;
+      margin = {top: 20, right: 50, bottom: 0, left: 160};
+      chart_height = 180;
+      title0_offset = -120;
+      title1_offset = -120;
+      title2_offset = -150;
+      title3_offset = -90;
+      y_offset = -145;
+      legend_offset = 140;
+    } else {
+      cwidth = chartDiv.clientWidth-170;
+      cheight = chartDiv.clientHeight;
+      margin = {top: 5, right: 50, bottom: 0, left: 300};
+      chart_height = 380;
+      title0_offset = -210;
+      title1_offset = -210;
+      title2_offset = -250;
+      title3_offset = -190;
+      y_offset = -285;
+      legend_offset = 355;
+    }
+
+    var width = 860 - margin.left - margin.right,
+        height = 100 - margin.top - margin.bottom;
+
+    var x = d3.scale.linear()
+        .range([0, cwidth-180]);
+
+    var barHeight = 20;
+
+    var duration = 500,
+        delay = 25;
+
+    var partition = d3.layout.partition()
+        .sort(function (a, b) { return d3.descending(a.homo, b.homo); })
+        .value(function(d) {
+            return d.homo;
+          });
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .tickFormat("")
+        .orient("top");
+
+    var svg = d3.select(chartDiv).append("svg")
+        .attr("width", cwidth + margin.left + margin.right)
+        .attr("height", chart_height)
+        .attr("id","svg"+index)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    //var div = d3.select("body").append("div")
+    //                    .attr("class", "tooltip")
+    //                    .style("opacity", 0);
+
+    svg.append('defs')
+      .append('pattern')
+        .attr('id', 'diagonalHatch')
+        .attr('patternUnits', 'userSpaceOnUse')
+        .attr('width', 4)
+        .attr('height', 4)
+      .append('path')
+        .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+        .attr('stroke', '#000000')
+        .attr('stroke-width', 1);
+
+    var canvas_height = hierarchy ?  360:550; // for image generation
+    var canvas_width = hierarchy ?  80:180;
+    var canvas_x = hierarchy ?  -200:-300;
+
+    svg.append("rect")
+        .attr("x", canvas_x)
+        .attr("y",-170)
+        .attr("class", "background")
+        .attr("width", cwidth+canvas_width)
+        //.attr("width", cwidth-120)
+        .attr("height", canvas_height)
+        .on("click", up);
+
+    svg.append("g")
+        .attr("class", "x axis");
+
+    svg.append("g")
+        .attr("class", "y axis")
+      .append("line")
+        .attr("y1", "120px");
+
+    //if(index==0) {
+      svg.append("g")
+      .attr("class", "homotxtlegend")
+      .append("text")
+        .attr("x", cwidth-225)
+        .attr("y", legend_offset)
+        .style("font-family", "sans-serif")
+        .style("font-size", "13px")
+        .text("homogeneous");
+    svg.append("g")
+      .attr("class", "homolegend")
+      .append("rect")
+        .attr("fill", homo_color)
+        .attr("width",10)
+        .attr("height",10)
+        .attr("x", cwidth-240)
+        .attr("y", legend_offset-10);
+
+    svg.append("g")
+      .attr("class", "heterotxtlegend")
+      .append("text")
+        .attr("x", cwidth-225)
+        .attr("y", legend_offset+15)
+        .style("font-family", "sans-serif")
+        .style("font-size", "13px")
+        .text("heterogeneous");
+    svg.append("g")
+      .attr("class", "heterolegend")
+      .append("rect")
+        .attr("fill", hetero_color) //"#B3E5FC")
+        .attr("width",10)
+        .attr("height",10)
+        .attr("x", cwidth-240)
+        .attr("y", legend_offset+5);
+    svg.append("g")
+      .attr("class", "heterolegend")
+      .append("rect")
+        .attr("fill", "url(#diagonalHatch)")
+        .attr("width",10)
+        .attr("height",10)
+        .attr("x", cwidth-240)
+        .attr("y", legend_offset+5);
+    //}
+
+    svg.append("g")
+        .attr("class", "legend")
+      .append("text")
+        .text(field)
+        .attr("font-weight","bold")
+        .attr("font-size","14px")
+        .attr("x", function(d,i) { if(index==0) {return title0_offset} else if(index==1) {return title1_offset} else if(index==2) {return title2_offset} else {return title3_offset }})
+        .attr("y", y_offset)
+        .attr("transform","rotate(-90)");
+
+
+    var field = fields[index];
+    var json_file="data/"+field.file;
+
+    d3.json(json_file, function(error, root) {
+
+      if (error) throw error;
+
+      partition.nodes(root);
+      x.domain([0, 100]).nice();
+      down(root, 0);
+    });
+
+    function down(d, i) {
+      if (!d.children || this.__transition__) return;
+      var end = duration + d.children.length * delay;
+
+      // Mark any currently-displayed bars as exiting.
+      var exit = svg.selectAll(".enter")
+          .attr("class", "exit");
+
+      // Entering nodes immediately obscure the clicked-on bar, so hide it.
+      exit.selectAll("rect").filter(function(p) { return p === d; })
+          .style("fill-opacity", 1e-6);
+
+      // Enter the new bars for the clicked-on data.
+      // Per above, entering bars are immediately visible.
+      var enter = bar(d)
+          .attr("transform", stack(i))
+          .style("opacity", 1);
+
+      // Have the text fade-in, even though the bars are visible.
+      // Color the bars as parents; they will fade to children if appropriate.
+      enter.select("text").style("fill-opacity", 1e-6);
+      enter.select("rect").style("fill", homo_color);//function(d) { return d.color; }); //color(true));
+
+      // Update the x-scale domain.
+      x.domain([0, 100]).nice();//d3.max(d.children, function(d) { return d.value; })]).nice();
+
+      // Update the x-axis.
+      svg.selectAll(".x.axis").transition()
+          .duration(duration)
+          .call(xAxis);
+
+      // Transition entering bars to their new position.
+      var enterTransition = enter.transition()
+          .duration(duration)
+          .delay(function(d, i) { return i * delay; })
+          .attr("transform", function(d, i) { return "translate(0," + barHeight * i * 1.2 + ")"; });
+
+      // Transition entering text.
+      enterTransition.select("text")
+          .style("fill-opacity", 1);
+
+      // Transition entering rects to the new x-scale.
+      enterTransition.select("rect")
+          .attr("width", function(d) { return x(d.homo); })
+          .style("fill", homo_color);
+
+      // Transition exiting bars to fade out.
+      var exitTransition = exit.transition()
+          .duration(duration)
+          .style("opacity", 1e-6)
+          .remove();
+
+      // Transition exiting bars to the new x-scale.
+      exitTransition.selectAll("rect")
+          .attr("width", function(d) { return x(d.homo); });
+
+      // Rebind the current node to the background.
+      svg.select(".background")
+          .datum(d)
+        .transition()
+          .duration(end);
+      d.index = i;
+    }
+
+    function up(d) {
+      if (!d.parent || this.__transition__) return;
+      var end = duration + d.children.length * delay;
+
+      // Mark any currently-displayed bars as exiting.
+      var exit = svg.selectAll(".enter")
+          .attr("class", "exit");
+
+      // Enter the new bars for the clicked-on data's parent.
+      var enter = bar(d.parent)
+          .attr("transform", function(d, i) { return "translate(0," + barHeight * i * 1.2 + ")"; })
+          .style("opacity", 1e-6);
+
+      // Color the bars as appropriate.
+      // Exiting nodes will obscure the parent bar, so hide it.
+      enter.select("rect")
+          .style("fill", homo_color)
+          .filter(function(p) { return p === d; })
+          .style("fill-opacity", 1e-6);
+
+      // Update the x-scale domain.
+      x.domain([0, 100]).nice(); //d3.max(d.parent.children, function(d) { return d.value; })]).nice();
+
+      // Update the x-axis.
+      svg.selectAll(".x.axis").transition()
+          .duration(duration)
+          .call(xAxis);
+
+      // Transition entering bars to fade in over the full duration.
+      var enterTransition = enter.transition()
+          .duration(end)
+          .style("opacity", 1);
+
+      // Transition entering rects to the new x-scale.
+      // When the entering parent rect is done, make it visible!
+      enterTransition.select("rect")
+          .attr("width", function(d) { return x(d.homo); })
+          .each("end", function(p) { if (p === d) d3.select(this).style("fill-opacity", null); });
+
+      // Transition exiting bars to the parent's position.
+      var exitTransition = exit.selectAll("g").transition()
+          .duration(duration)
+          .delay(function(d, i) { return i * delay; })
+          .attr("transform", stack(d.index));
+
+      // Transition exiting text to fade out.
+      exitTransition.select("text")
+          .style("fill-opacity", 1e-6);
+
+      // Transition exiting rects to the new scale and fade to parent color.
+      exitTransition.select("rect")
+          .attr("width", function(d) { return x(d.homo); })
+          .style("fill", homo_color);
+
+      // Remove exiting nodes when the last child has finished transitioning.
+      exit.transition()
+          .duration(end)
+          .remove();
+
+      // Rebind the current parent to the background.
+      svg.select(".background")
+          .datum(d.parent)
+        .transition()
+          .duration(end);
+    }
+
+    // Creates a set of bars for the given data node, at the specified index.
+    function bar(d) {
+      var bar = svg.insert("g", ".y.axis")
+          .attr("class", "enter")
+          .attr("transform", "translate(0,5)")
+        .selectAll("g")
+          .data(d.children)
+        .enter().append("g")
+          .style("cursor", function(d) { return !d.children ? null : "pointer"; })
+          .on("click", down);
+
+      bar.append("text")
+          .attr("x", -6)
+          .attr("y", barHeight / 2)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .style("font-family", "sans-serif")
+          .style("font-size", "13px")
+          .text(function(d) { return d.name; });
+
+      bar.append("rect")
+          .attr("width", function(d) { return x(d.homo); })
+          .attr("height", barHeight)
+          .attr("fill", "#FFCDD2")
+          .on("mouseover", function() {
+            d3.select(this)
+              .attr("stroke", "darkred")
+              .attr("stroke-width", function(d) { return !d.children ? 0 : 2; })
+          })
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("stroke-width", 0)
+          });
+
+      bar.append("rect")
+          .attr("transform", function(d) { var trans ="translate("+(x(d.homo))+",0)"; return trans; })
+          .attr("width", function(d) { return x(d.hetero); })
+          .attr("height", barHeight)
+          .attr("fill", hetero_color)
+          .on("mouseover", function() {
+            d3.select(this)
+              .attr("stroke", "darkblue")
+              .attr("stroke-width", function(d) { return !d.children ? 0 : 1; })
+          })
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("stroke-width", 0)
+          });
+
+      bar.append("rect")
+          .attr("transform", function(d) { var trans ="translate("+(x(d.homo))+",0)"; return trans; })
+          .attr("width", function(d) { return x(d.hetero); })
+          .attr("height", barHeight)
+          .attr("fill", hetero_color)
+          .on("mouseover", function() {
+            d3.select(this)
+              .attr("stroke", "black")
+              .attr("stroke-width", function(d) { return !d.children ? 0 : 2; })
+          })
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("stroke-width", 0)
+          });
+
+      bar.append("rect")
+          .attr("transform", function(d) { var trans ="translate("+(x(d.homo))+",0)"; return trans; })
+          .attr("width", function(d) { return x(d.hetero); })
+          .attr("height", barHeight)
+          .attr("fill", "url(#diagonalHatch)")
+          .on("mouseover", function() {
+            d3.select(this)
+              .attr("stroke", "black")
+              .attr("stroke-width", function(d) { return !d.children ? 0 : 2; })
+          })
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("stroke-width", 0)
+          });
+
+      bar.append("text")
+          .attr("x", function(d) { return x(d.homo/2-2);} )
+          .attr("y", barHeight / 2)
+          .attr("dy", ".35em")
+          .style("text-anchor", "left")
+          .style("fill","white")
+          .style("font-size","14px")
+          .text(function(d) { if(d.homo!="0") { return d.homo+"%" } else { return "" }; });
+
+      bar.append("text")
+          .attr("x", function(d) { return x(d.hetero/2+d.homo);} )
+          .attr("y", barHeight / 2)
+          .attr("dy", ".35em")
+          .style("text-anchor", "left")
+          .style("fill","white")
+          .style("font-size","14px")
+          .text(function(d) { return d.hetero+"%"; });
+
+      return bar;
+    }
+
+    // A stateful closure for stacking bars horizontally.
+    function stack(i) {
+      var x0 = 0;
+      return function(d) {
+        var tx = "translate(" + x0 + "," + barHeight * i * 1.2 + ")";
+        x0 += x(d.value);
+        return tx;
+      };
+    }
+  }
+
+  // draw charts
+  for(c=0;c<fields.length;c++) {
+      obj = fields[c];
+      field = obj.field;
+      drawChart(field,c,true);
+  }
+
+  d3.select(window).on('resize', resize);
+    function resize() {
+      // draw charts
+      for(c=0;c<fields.length;c++) {
+        var chartDiv1 = document.getElementById("chart"+c);
+        while (chartDiv1.firstChild) {
+          chartDiv1.removeChild(chartDiv1.firstChild);
+        }
+        obj = fields[c];
+        field = obj.field;
+        drawChart(field,c,chart_option);
+      }
+    };
+
+  </script>
+
+  </body>
+</html>

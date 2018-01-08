@@ -1,0 +1,40 @@
+{
+ "name": "ethno-computer",
+ "children": [
+  {
+   "name": "East Asian", 
+   "homo": 64.8, 
+   "hetero": 35.2
+  },
+  {
+    "name": "Japanese", 
+    "homo": 13, 
+    "hetero": 87
+  },
+  {
+    "name": "French", 
+    "homo": 18.42, 
+    "hetero": 81.58
+  },
+  {
+    "name": "Germanic", 
+    "homo": 10, 
+    "hetero": 90
+  },
+  {
+    "name": "Hispanic", 
+    "homo": 12.5, 
+    "hetero": 87.5
+  },
+  { 
+    "name": "Italian", 
+    "homo": 7.90, 
+    "hetero": 92.10
+  },
+  { 
+    "name": "Nordic", 
+    "homo": 0, 
+    "hetero": 100
+  }  
+ ]
+}

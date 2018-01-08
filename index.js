@@ -1,0 +1,21 @@
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 5000
+
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .get('/test', (req, res) => res.render('pages/test'))
+  .get('/ethno-science', (req, res) => res.render('pages/ethno-science/index'))
+  .get('/histo', (req, res) => res.render('pages/ethno-science/histo'))
+  .get('/histo2', (req, res) => res.render('pages/ethno-science/histo2'))
+  .get('/skillscape', (req, res) => res.render('pages/skillscape/index'))
+  .get('/jobs_compare', (req, res) => res.render('pages/skillscape/jobs_compare'))
+  .get('/city_compare', (req, res) => res.render('pages/skillscape/city_compare'))
+  .get('/about', (req, res) => res.render('pages/skillscape/about'))
+  .get('/methods', (req, res) => res.render('pages/skillscape/methods'))
+  .get('/querybuilder', (req, res) => res.render('pages/querybuilder/index'))
+
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))

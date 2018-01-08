@@ -1,0 +1,103 @@
+{
+ "name": "ethno-mecha",
+ "children": [
+  {
+   "name": "Greater European",
+   "homo":49.72,
+   "hetero":50.28,
+   "children": [
+    {
+      "name": "British", 
+      "homo": 63.62, 
+      "hetero": 36.38
+    },
+    { 
+      "name": "East European", 
+      "homo": 22, 
+      "hetero": 78
+    },
+    {
+      "name": "Jewish", 
+      "homo": 5.55, 
+      "hetero": 94.45
+    },
+    {
+      "name": "West European",
+      "homo": 15.75, 
+      "hetero": 84.25,
+      "children": [
+        {
+          "name": "French", 
+          "homo": 11.42, 
+          "hetero": 88.58
+        },
+        {
+          "name": "Germanic", 
+          "homo": 11.76, 
+          "hetero": 88.24
+        },
+        {
+          "name": "Hispanic", 
+          "homo": 27.58, 
+          "hetero": 72.42
+        },
+        { 
+          "name": "Italian", 
+          "homo": 18.18, 
+          "hetero": 81.82
+        },
+        { 
+          "name": "Nordic", 
+          "homo": 13.33, 
+          "hetero": 86.67
+        }
+      ]
+    }
+   ]
+  },
+  {
+   "name": "Greater African",
+   "homo":9.37,
+   "hetero":90.63,
+   "children": [
+    { "name": "Africans", 
+      "homo": 0, 
+      "hetero": 100
+    },
+    { "name": "Muslim", 
+      "homo": 12.76, 
+      "hetero": 87.24 
+    }
+   ]
+  },
+  {
+   "name": "Asian",
+   "homo":51.27,
+   "hetero":48.73,
+   "children": [
+    {
+     "name": "Indian Sub Continent", 
+     "homo": 31.42, 
+     "hetero": 68.58
+    },
+    {
+     "name": "Greater East Asian",
+     "homo":58.04,
+     "hetero":41.96,
+     "children": [
+      {
+       "name": "East Asian", 
+       "homo": 62.26, 
+       "hetero": 37.74 
+      },
+      {
+       "name": "Japanese", 
+       "homo": 6.45, 
+       "hetero": 93.55
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
